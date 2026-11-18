@@ -79,10 +79,10 @@ slowed by a stored core dump):
 
 | arduino-esp32 build | RX dead |
 | --- | --- |
-| 3.3.13 | 10 of 10 |
-| 3.3.13, only the line above changed | 0 of 10 |
-| 3.3.13 with 3.3.11's `HWCDC.cpp` | 0 of 10 |
-| 3.3.11 | 0 of 10 |
+| 3.3.13 | ❌ 10 of 10 |
+| 3.3.13, only the line above changed | ✅ 0 of 10 |
+| 3.3.13 with 3.3.11's `HWCDC.cpp` | ✅ 0 of 10 |
+| 3.3.11 | ✅ 0 of 10 |
 
 With the core dump erased (shorter boot), every build passed 10 of 10.
 
@@ -93,10 +93,10 @@ sketch there is no core dump involved, and the result is the same every time:
 
 | Build | Early write | Passed |
 | --- | --- | --- |
-| 3.3.13 | no | 3 of 3 |
-| 3.3.13 | yes | 0 of 5 |
-| 3.3.13 + fix | yes | 5 of 5 |
-| 3.3.13 + fix | no | 3 of 3 |
+| 3.3.13 | no | ✅ 3 of 3 |
+| 3.3.13 | yes | ❌ 0 of 5 |
+| 3.3.13 + fix | yes | ✅ 5 of 5 |
+| 3.3.13 + fix | no | ✅ 3 of 3 |
 
 Related: #13096 / #13103 fixed connection detection after #13048, but not this.
 

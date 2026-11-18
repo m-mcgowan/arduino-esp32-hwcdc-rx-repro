@@ -72,7 +72,7 @@ peripheral accepts no further OUT packets while the FIFO holds it.
 usb_serial_jtag_ll_clr_intsts_mask(USB_SERIAL_JTAG_LL_INTR_MASK & ~USB_SERIAL_JTAG_INTR_SERIAL_OUT_RECV_PKT);
 ```
 
-PR: <!-- link the PR from m-mcgowan:fix/hwcdc-keep-pending-rx once opened -->
+I'll open a PR with this change; it links back here.
 
 **Measurements** (ESP32-S3, PlatformIO, 10 tries each; host resets the board and writes at once; boot
 slowed by a stored core dump):

@@ -113,6 +113,28 @@ Measured on an ESP32-S3 board (macOS host):
 | `fixed` | yes | 5 of 5 |
 | `fixed` | no | 3 of 3 |
 
+## A second issue: the IN-token interrupt's CPU cost
+
+`in-token/` measures another side effect of #13048. To see when a host has the port open,
+`HWCDC::begin()` enables the `TOKEN_REC_IN_EP1` interrupt and leaves it on, so while a host has
+the port open the chip takes one interrupt for every IN token the host sends. The sketch counts
+`loop()` iterations per second at 80 MHz:
+
+```bash
+pio run -d in-token -e stock -t upload --upload-port <port>
+# then open the port with any serial monitor and read the loops/s lines for ~15 s
+```
+
+| Environment | Core | `loop()` iterations/s |
+| --- | --- | --- |
+| `v3311` | 3.3.11 | 58,495 |
+| `stock` | 3.3.13 | about 46,500 |
+| `sampled` | 3.3.13, interrupt off, the token's raw status sampled in `isCDC_Connected()` | 58,993 |
+
+`sampled` uses the fork tag
+[`3.3.13-hwcdc2`](https://github.com/m-mcgowan/arduino-esp32/tree/3.3.13-hwcdc2), which has both
+fixes. `while (!Serial)` still sees the port open with it.
+
 ## Related
 
 - [#13048](https://github.com/espressif/arduino-esp32/pull/13048) "fix(hwcdc): detect host open from
